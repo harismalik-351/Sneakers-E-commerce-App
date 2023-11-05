@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary_dark">#0c6cfb</color>
+    <color name="status_bar_color">#0c6cfb</color>
+    <color name="bootsplash_background">#0D6EFD</color>
+</resources>
