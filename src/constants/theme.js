@@ -6,4 +6,5 @@ export const theme = {
   primeryDark: '#707B81',
   secondaryDark: '#6A6A6A',
   orange: '##F87265',
+  backdrop: '#1483c2',
 };

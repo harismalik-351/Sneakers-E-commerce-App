@@ -14,6 +14,9 @@ const LoginScreen = ({navigation}) => {
   return (
     <ScrollView className="flex-1 p-5 bg-white">
       <TouchableOpacity
+        onPress={() => {
+          navigation.goBack();
+        }}
         style={{backgroundColor: theme.secondaryBackground}}
         className="w-12 h-12 rounded-full justify-center items-center">
         <ChevronLeftIcon color={theme.darkColor} size={'18'} />

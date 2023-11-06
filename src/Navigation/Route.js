@@ -9,6 +9,8 @@ import {
   RegisterScreen,
 } from '../Authentication';
 import BootSplash from 'react-native-bootsplash';
+import {OnBoardScreen} from '../Screens/indes';
+import {theme} from '../constants/theme';
 
 const Route = () => {
   const Stack = createNativeStackNavigator();
@@ -31,6 +33,7 @@ const Route = () => {
           BootSplash.hide();
         }}>
         <Stack.Navigator
+          initialRouteName="OnBoardScreen"
           screenOptions={{
             headerShown: false,
             navigationBarColor: '#fff',
@@ -38,13 +41,22 @@ const Route = () => {
             statusBarColor: '#fff',
             animationDuration: 250,
             animation: 'slide_from_right',
-            detachPreviousScreen: false,
+            animationTypeForReplace: 'push',
             statusBarTranslucent: true,
           }}>
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="Register" component={RegisterScreen} />
           <Stack.Screen name="Forget" component={ForgetPasswordScreen} />
           <Stack.Screen name="OtpScreen" component={OtpScreen} />
+          <Stack.Screen
+            name="OnBoardScreen"
+            options={{
+              statusBarColor: theme.backdrop,
+              navigationBarColor: theme.backdrop,
+              statusBarStyle: 'light',
+            }}
+            component={OnBoardScreen}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaView>
