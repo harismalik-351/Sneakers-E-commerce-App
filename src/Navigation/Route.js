@@ -9,10 +9,18 @@ import {
   RegisterScreen,
 } from '../Authentication';
 import BootSplash from 'react-native-bootsplash';
-import {OnBoardScreen} from '../Screens/indes';
+import {HomeScreen, OnBoardScreen} from '../Screens/indes';
 import {theme} from '../constants/theme';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Route = () => {
+  const [user, setUser] = React.useState([]);
+  React.useEffect(() => {
+    AsyncStorage.getItem('userAuth').then(user => {
+      setUser(JSON.stringify(user));
+    });
+  }, []);
+
   const Stack = createNativeStackNavigator();
 
   return (
@@ -33,7 +41,7 @@ const Route = () => {
           BootSplash.hide();
         }}>
         <Stack.Navigator
-          initialRouteName="OnBoardScreen"
+          initialRouteName="HomeScreen"
           screenOptions={{
             headerShown: false,
             navigationBarColor: '#fff',
@@ -44,18 +52,29 @@ const Route = () => {
             animationTypeForReplace: 'push',
             statusBarTranslucent: true,
           }}>
+          <Stack.Screen name="OtpScreen" component={OtpScreen} />
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="Register" component={RegisterScreen} />
           <Stack.Screen name="Forget" component={ForgetPasswordScreen} />
-          <Stack.Screen name="OtpScreen" component={OtpScreen} />
           <Stack.Screen
             name="OnBoardScreen"
             options={{
               statusBarColor: theme.backdrop,
+              statusBarTranslucent: true,
               navigationBarColor: theme.backdrop,
               statusBarStyle: 'light',
             }}
             component={OnBoardScreen}
+          />
+          <Stack.Screen
+            name="HomeScreen"
+            component={HomeScreen}
+            options={{
+              statusBarColor: theme.secondaryBackground,
+              statusBarTranslucent: true,
+              navigationBarColor: theme.secondaryBackground,
+              statusBarStyle: 'dark',
+            }}
           />
         </Stack.Navigator>
       </NavigationContainer>

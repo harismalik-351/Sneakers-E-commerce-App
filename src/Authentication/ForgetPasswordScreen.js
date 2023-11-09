@@ -65,19 +65,19 @@ const ForgetPasswordScreen = ({navigation}) => {
             backgroundColor={theme.primery}
             color={theme.backgroundColor}
             onPress={() => {
-              if (email.length > 10 && email.includes('@')) {
+              if (email.length > 2 && email.includes('@')) {
                 setTimeout(() => {
                   openFilterModel();
-                }, 2000);
+                  if (dismiss) {
+                    navigation.push('OtpScreen');
+                  }
+                }, 500);
               } else {
                 ToastAndroid.showWithGravity(
                   'Please Enter Your Proper Email',
                   ToastAndroid.SHORT,
                   ToastAndroid.CENTER,
                 );
-              }
-              if (dismiss) {
-                navigation.push('OtpScreen');
               }
             }}
           />

@@ -9,6 +9,7 @@ import {theme} from '../constants/theme';
 import {InputField, SecurityIcon} from '../Components';
 import {ScrollView} from 'react-native-gesture-handler';
 import LongButton from '../Components/LongButton';
+import GoogleSignin from './GoogleSignIn';
 
 const input = 'text-sm font-semibold tracking-wider ';
 const RegisterScreen = ({navigation}) => {
@@ -96,20 +97,7 @@ const RegisterScreen = ({navigation}) => {
             console.log('login');
           }}
         />
-        <LongButton
-          title={'Sign Up With Google'}
-          backgroundColor={theme.secondaryBackground}
-          color={theme.darkColor}
-          onPress={() => {
-            console.log('login');
-          }}
-          Childred={
-            <Image
-              source={require('../../assets/google.png')}
-              style={{width: 25, height: 25, marginHorizontal: 10}}
-            />
-          }
-        />
+        <GoogleSignin />
       </View>
       <View className="flex-row self-center justify-center items-center">
         <Text

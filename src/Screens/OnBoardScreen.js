@@ -13,6 +13,7 @@ const OnBoardScreen = () => {
   return (
     <Onboarding
       onDone={handleDone}
+      controlStatusBar={false}
       onSkip={handleDone}
       bottomBarColor={theme.backdrop}
       titleStyles={{

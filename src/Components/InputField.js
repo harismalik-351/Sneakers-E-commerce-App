@@ -8,10 +8,12 @@ const InputField = ({
   appendChild,
   containerStyles,
   value,
+  innerStyles,
   onChangeText,
   maxLength,
+  prependChild,
   secureTextEntry,
-  testID,
+  iconStyle,
 }) => {
   return (
     <View
@@ -21,6 +23,7 @@ const InputField = ({
       ]}
       className="rounded-lg my-3 h-12">
       <View className="flex-row w-full m-1 px-3 items-center justify-between">
+        <View style={{...iconStyle}}>{prependChild}</View>
         <TextInput
           placeholder={placeholder}
           placeholderTextColor={theme.secondaryDark}
@@ -28,9 +31,10 @@ const InputField = ({
           numberOfLines={1}
           style={{
             width: '80%',
-            fontSize: 13,
+            fontSize: 14,
             color: theme.darkColor,
             fontWeight: '600',
+            ...innerStyles,
           }}
           keyboardAppearance="light"
           keyboardType="default"
