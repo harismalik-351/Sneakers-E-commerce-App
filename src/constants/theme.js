@@ -7,4 +7,6 @@ export const theme = {
   secondaryDark: '#6A6A6A',
   orange: '##F87265',
   backdrop: '#1483c2',
+  discount: '#674DC5',
+  starTint: '#8D8D8D',
 };
