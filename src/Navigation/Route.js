@@ -9,9 +9,10 @@ import {
   RegisterScreen,
 } from '../Authentication';
 import BootSplash from 'react-native-bootsplash';
-import {HomeScreen, OnBoardScreen} from '../Screens/indes';
+import {CheckOut, HomeScreen, MyCart, OnBoardScreen} from '../Screens';
 import {theme} from '../constants/theme';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import BottomNavigation from './BottomNavigation';
 
 const Route = () => {
   const [user, setUser] = React.useState([]);
@@ -41,7 +42,7 @@ const Route = () => {
           BootSplash.hide();
         }}>
         <Stack.Navigator
-          initialRouteName="HomeScreen"
+          initialRouteName="BottomNavigation"
           screenOptions={{
             headerShown: false,
             navigationBarColor: '#fff',
@@ -67,12 +68,32 @@ const Route = () => {
             component={OnBoardScreen}
           />
           <Stack.Screen
-            name="HomeScreen"
-            component={HomeScreen}
+            name="BottomNavigation"
+            component={BottomNavigation}
             options={{
               statusBarColor: theme.secondaryBackground,
               statusBarTranslucent: true,
-              navigationBarColor: theme.secondaryBackground,
+              navigationBarHidden: true,
+              statusBarStyle: 'dark',
+            }}
+          />
+          <Stack.Screen
+            name="MyCart"
+            component={MyCart}
+            options={{
+              statusBarColor: theme.secondaryBackground,
+              statusBarTranslucent: true,
+              navigationBarHidden: true,
+              statusBarStyle: 'dark',
+            }}
+          />
+          <Stack.Screen
+            name="Checkout"
+            component={CheckOut}
+            options={{
+              statusBarColor: theme.secondaryBackground,
+              statusBarTranslucent: true,
+              navigationBarHidden: true,
               statusBarStyle: 'dark',
             }}
           />

@@ -11,14 +11,14 @@ const ShoesCard = ({title, price, image, favourite, addToCart}) => {
     <View
       style={{width: width * 0.43}}
       className="flex-1 bg-white my-3 mx-1 rounded-2xl">
-      <View className="p-3">
+      <View className="px-3 py-2">
         <View>
-          <TouchableOpacity>
+          <TouchableOpacity className="py-2">
             <HeartIcon strokeWidth={2} color={'#000'} size={'20'} />
           </TouchableOpacity>
           <View className=" justify-center items-center pb-2">
             <Image
-              style={{width: 140, height: 125}}
+              style={{width: 140, height: 105}}
               source={require('../../assets/page1.png')}
             />
             <View
@@ -41,10 +41,23 @@ const ShoesCard = ({title, price, image, favourite, addToCart}) => {
       <View
         className=" flex-row justify-between items-center "
         style={{width: width * 0.429}}>
-        <Text className="px-3 text-black text-sm font-semibold">$300.00</Text>
-        <TouchableOpacity className="bg-primary justify-center items-center w-10 h-10 rounded-tl-2xl rounded-br-2xl ">
-          <PlusIcon color={theme.backgroundColor} />
-        </TouchableOpacity>
+        <Text
+          style={{paddingBottom: favourite ? 10 : 0}}
+          className="px-3 text-black text-sm font-semibold">
+          $300.00
+        </Text>
+
+        {favourite ? (
+          <View className="w-24 items-center pb-2 justify-center flex-row gap-2">
+            <View className="w-3 h-3 bg-red-600 rounded-full" />
+            <View className="w-3 h-3 bg-blue-600 rounded-full" />
+            <View className="w-3 h-3 bg-gray-800 rounded-full" />
+          </View>
+        ) : (
+          <TouchableOpacity className="bg-primary justify-center items-center w-10 h-10 rounded-tl-2xl rounded-br-2xl ">
+            <PlusIcon color={theme.backgroundColor} />
+          </TouchableOpacity>
+        )}
       </View>
     </View>
   );

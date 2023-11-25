@@ -13,7 +13,7 @@ const RippleButton = ({innerStyles, Children, onPress}) => {
       rippleDuration={400}>
       <View
         className="w-11 h-11 items-center justify-center rounded-full"
-        style={{backgroundColor: '#F7F7F9'}}>
+        style={[{backgroundColor: '#F7F7F9'}, ...innerStyles]}>
         {Children}
       </View>
     </Ripple>

@@ -14,18 +14,15 @@ import {
   InputField,
   ShoesCard,
 } from '../Components';
-import {TouchableOpacity, FlatList} from 'react-native-gesture-handler';
+import {
+  TouchableOpacity,
+  FlatList,
+  ScrollView,
+} from 'react-native-gesture-handler';
 import {ShoesList} from '../constants/shoelist';
-import {useNavigation} from '@react-navigation/native';
 
 const HomeScreen = () => {
   const [selected, setSelected] = React.useState('All Shoes');
-
-  const navigation = useNavigation();
-
-  navigation.setOptions(() => ({
-    navigationBarColor: '#fff',
-  }));
 
   const data = new Array(10).fill(0).map((_, index) => {
     index;
@@ -40,8 +37,8 @@ const HomeScreen = () => {
   return (
     <>
       <FilterModal ref={filterRef} />
-      <View
-        className="flex-1 p-5 "
+      <ScrollView
+        className="flex-1 p-5"
         style={{backgroundColor: theme.secondaryBackground}}>
         <HeaderComp
           title={'Explore'}
@@ -127,7 +124,7 @@ const HomeScreen = () => {
                 }}
                 className={
                   selected === item.name
-                    ? 'px-6 py-3 my-4 rounded-lg mx-2 bg-primary '
+                    ? 'px-6 py-3 my-4 rounded-lg  mx-2 bg-primary '
                     : 'px-6 py-3 my-4 rounded-lg bg-white mx-2'
                 }
                 style={{borderWidth: 1, borderColor: theme.primery}}
@@ -155,7 +152,7 @@ const HomeScreen = () => {
             legacyImplementation={true}
             showsHorizontalScrollIndicator={false}
             data={data}
-            renderItem={({item, index}) => <ShoesCard />}
+            renderItem={({item, index}) => <ShoesCard favourite={false} />}
           />
           <View className="mx-2 my-1 flex-row justify-between items-center">
             <Text className="text-lg  font-medium">New Arrivals</Text>
@@ -165,7 +162,7 @@ const HomeScreen = () => {
           </View>
           <DiscountBanners />
         </View>
-      </View>
+      </ScrollView>
     </>
   );
 };

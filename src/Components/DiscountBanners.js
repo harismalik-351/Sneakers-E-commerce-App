@@ -2,10 +2,32 @@ import {Dimensions, Image, Text, View} from 'react-native';
 import React from 'react';
 import {theme} from '../constants/theme';
 
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withRepeat,
+  withTiming,
+} from 'react-native-reanimated';
+
 const {width, height} = Dimensions.get('screen');
+
 const DiscountBanners = ({}) => {
+  const AImage = Animated.createAnimatedComponent(Image);
+
+  const offset = useSharedValue(10);
+
+  const animatedStyles = useAnimatedStyle(() => ({
+    transform: [{translateY: offset.value}],
+  }));
+
+  React.useEffect(() => {
+    offset.value = withRepeat(withTiming(-2, {duration: 1500}), -1, true);
+  }, []);
+
   return (
-    <View className="bg-white h-28 rounded-2xl my-3 p-4 justify-between items-center flex-row">
+    <View
+      style={{elevation: 5}}
+      className="bg-white h-28 rounded-2xl my-3 p-4 justify-between items-center flex-row">
       <View className=" flex-1">
         <Text className="text-xs font-normal text-black tracking-wide">
           Winter Sale
@@ -14,16 +36,30 @@ const DiscountBanners = ({}) => {
           15% OFF
         </Text>
       </View>
+      <Image
+        source={require('../../assets/sketch1.png')}
+        style={{
+          tintColor: theme.primery + 31,
+          width: 250,
+          height: 100,
+          position: 'absolute',
+          top: 0,
+          left: 0,
+        }}
+      />
       <View className="-rotate-12">
-        <Image
+        <AImage
           source={require('../../assets/page1.png')}
-          style={{
-            height: 125,
-            position: 'absolute',
-            right: -10,
-            bottom: -15,
-            width: 170,
-          }}
+          style={[
+            {
+              height: 125,
+              position: 'absolute',
+              right: -10,
+              bottom: -15,
+              width: 170,
+            },
+            animatedStyles,
+          ]}
           resizeMode="cover"
         />
       </View>
@@ -59,10 +95,6 @@ const DiscountBanners = ({}) => {
           top: 0,
           left: width * 0.45,
         }}
-      />
-      <View
-        style={{transform: [{rotateX: '83deg'}], opacity: 0.3}}
-        className="bg-zinc-600 w-28 h-12 rounded-full absolute -rotate-12 right-12 -bottom-4"
       />
     </View>
   );
