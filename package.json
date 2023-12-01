@@ -24,6 +24,7 @@
     "react-native-gesture-handler": "^2.14.0",
     "react-native-heroicons": "^3.2.0",
     "react-native-material-ripple": "^0.9.1",
+    "react-native-modal": "^13.0.1",
     "react-native-onboarding-swiper": "^1.2.0",
     "react-native-paper": "^5.11.2",
     "react-native-reanimated": "^3.5.4",

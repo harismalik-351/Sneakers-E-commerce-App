@@ -5,5 +5,5 @@ export {default as Notification} from './Notification';
 export {default as Profile} from './Profile';
 export {default as MyCart} from './MyCart';
 export {default as CheckOut} from './CheckOut';
-export {default as ProcuctScreen} from './ProcuctScreen';
+export {default as ProductScreen} from './ProductScreen';
 export {default as SearchScreen} from './SearchScreen';

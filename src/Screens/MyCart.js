@@ -1,11 +1,7 @@
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {Text, View} from 'react-native';
 import React from 'react';
-import {HeaderComp, ShoesCard} from '../Components';
-import {
-  CheckIcon,
-  ChevronLeftIcon,
-  HeartIcon,
-} from 'react-native-heroicons/outline';
+import {CartCard, HeaderComp} from '../Components';
+import {ChevronLeftIcon} from 'react-native-heroicons/outline';
 import {theme} from '../constants/theme';
 import Ripple from 'react-native-material-ripple';
 import {FlatList} from 'react-native-gesture-handler';
@@ -29,6 +25,9 @@ const MyCart = ({navigation}) => {
           prepend={
             <Ripple
               rippleContainerBorderRadius={30}
+              onPress={() => {
+                navigation.goBack();
+              }}
               style={{
                 backgroundColor: theme.backgroundColor,
                 padding: 10,
@@ -47,40 +46,7 @@ const MyCart = ({navigation}) => {
           data={array}
           numColumns={1}
           renderItem={({item, index}) => (
-            <View className="bg-white rounded-2xl h-24 my-1.5 mx-2 flex-row border border-primary justify-between items-center">
-              <View className="mx-3 rounded-2xl bg-background">
-                <Image
-                  style={{width: 80, height: 70}}
-                  source={require('../../assets/page1.png')}
-                />
-              </View>
-              <View className="flex-1">
-                <Text
-                  lineBreakMode="tail"
-                  numberOfLines={1}
-                  className="text-base font-medium tracking-wide text-black">
-                  Nike Air Max 270
-                </Text>
-                <Text className="text-base font-semibold  text-black">
-                  $584.95
-                </Text>
-              </View>
-              <Ripple
-                onPress={() => {
-                  setSelected(!selected);
-                }}
-                rippleContainerBorderRadius={16}
-                className={
-                  selected
-                    ? 'mx-3 rounded-2xl p-2 bg-primary'
-                    : 'mx-3 rounded-2xl p-2 bg-background'
-                }>
-                <CheckIcon
-                  color={selected ? theme.backgroundColor : theme.primery}
-                  strokeWidth={2}
-                />
-              </Ripple>
-            </View>
+            <CartCard item={item} isSelected={setSelected} />
           )}
         />
       </View>

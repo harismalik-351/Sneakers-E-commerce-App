@@ -3,10 +3,8 @@ import React, {forwardRef} from 'react';
 import {BottomSheetBackdrop, BottomSheetModal} from '@gorhom/bottom-sheet';
 import {EnvelopeOpenIcon} from 'react-native-heroicons/outline';
 import {theme} from '../../constants/theme';
-import {useNavigation} from '@react-navigation/native';
 
-const FilterModal = forwardRef((props, ref) => {
-  const navigation = useNavigation();
+export const FilterModal = forwardRef((props, ref) => {
   const points = React.useMemo(() => ['40%'], []);
   const renderBackdrop = React.useCallback(
     props => (
@@ -21,10 +19,14 @@ const FilterModal = forwardRef((props, ref) => {
 
   return (
     <BottomSheetModal
+      handleIndicatorStyle={{display: 'none'}}
       ref={ref}
       snapPoints={points}
       backdropComponent={renderBackdrop}
+      // add bottom inset to elevate the sheet
+      bottomInset={300}
       // set `detached` to true
+      detached={true}
       style={styles.sheetContainer}>
       <View style={styles.contentContainer}>
         <View
@@ -52,6 +54,9 @@ const FilterModal = forwardRef((props, ref) => {
 export default FilterModal;
 
 const styles = StyleSheet.create({
+  sheetContainer: {
+    marginHorizontal: 20,
+  },
   contentContainer: {
     flex: 1,
     alignItems: 'center',

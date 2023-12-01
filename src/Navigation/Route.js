@@ -9,7 +9,14 @@ import {
   RegisterScreen,
 } from '../Authentication';
 import BootSplash from 'react-native-bootsplash';
-import {CheckOut, HomeScreen, MyCart, OnBoardScreen} from '../Screens';
+import {
+  CheckOut,
+  HomeScreen,
+  MyCart,
+  OnBoardScreen,
+  ProductScreen,
+  SearchScreen,
+} from '../Screens';
 import {theme} from '../constants/theme';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import BottomNavigation from './BottomNavigation';
@@ -90,6 +97,26 @@ const Route = () => {
           <Stack.Screen
             name="Checkout"
             component={CheckOut}
+            options={{
+              statusBarColor: theme.secondaryBackground,
+              statusBarTranslucent: true,
+              navigationBarHidden: true,
+              statusBarStyle: 'dark',
+            }}
+          />
+          <Stack.Screen
+            name="Search"
+            component={SearchScreen}
+            options={{
+              statusBarColor: theme.secondaryBackground,
+              statusBarTranslucent: true,
+              navigationBarHidden: true,
+              statusBarStyle: 'dark',
+            }}
+          />
+          <Stack.Screen
+            name="Product"
+            component={ProductScreen}
             options={{
               statusBarColor: theme.secondaryBackground,
               statusBarTranslucent: true,

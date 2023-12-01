@@ -3,48 +3,60 @@ import React from 'react';
 import {HeartIcon, PlusIcon} from 'react-native-heroicons/outline';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {theme} from '../constants/theme';
+import {useNavigation} from '@react-navigation/native';
 
 const {width, height} = Dimensions.get('screen');
 
-const ShoesCard = ({title, price, image, favourite, addToCart}) => {
+const ShoesCard = ({item, favourite, bestSellers}) => {
+  const navigation = useNavigation();
   return (
     <View
+      key={item?.id}
       style={{width: width * 0.43}}
       className="flex-1 bg-white my-3 mx-1 rounded-2xl">
       <View className="px-3 py-2">
+        <TouchableOpacity className=" justify-center items-center w-8 h-6 rounded-full">
+          <HeartIcon strokeWidth={2} color={'#000'} size={'20'} />
+        </TouchableOpacity>
         <View>
-          <TouchableOpacity className="py-2">
-            <HeartIcon strokeWidth={2} color={'#000'} size={'20'} />
-          </TouchableOpacity>
-          <View className=" justify-center items-center pb-2">
-            <Image
-              style={{width: 140, height: 105}}
-              source={require('../../assets/page1.png')}
-            />
-            <View
+          <TouchableOpacity
+            activeOpacity={0.9}
+            onPress={() => {
+              navigation.navigate('Product', {item});
+            }}
+            className=" justify-center items-center p-1 py-2">
+            {item?.imageURL ? (
+              <Image
+                style={{width: 140, height: 105}}
+                source={{uri: item?.imageURL}}
+              />
+            ) : null}
+            {/* <View
               style={{transform: [{rotateX: '83deg'}], opacity: 0.3}}
-              className="bg-zinc-300 w-16 h-12 rounded-full absolute -rotate-12 left-2 -bottom-4"
-            />
-          </View>
+              className="bg-zinc-300 w-16 h-5 rounded-full relative -rotate-12 left-2 bottom-0"
+            /> */}
+          </TouchableOpacity>
         </View>
         <Text
           style={{fontSize: 12, fontWeight: '600'}}
           className="text-primary  font-medium">
-          BEST SELLER
+          {item?.brand}
         </Text>
         <Text
-          style={{fontSize: 16, fontWeight: '400'}}
+          numberOfLines={1}
+          style={{fontSize: 13, fontWeight: '400'}}
           className="text-black font-normal tracking-wide">
-          Nike Jordan
+          {item?.name}
         </Text>
       </View>
       <View
         className=" flex-row justify-between items-center "
-        style={{width: width * 0.429}}>
+        // style={{width: width * 0.429}}>
+      >
         <Text
           style={{paddingBottom: favourite ? 10 : 0}}
           className="px-3 text-black text-sm font-semibold">
-          $300.00
+          ${item?.price}
         </Text>
 
         {favourite ? (

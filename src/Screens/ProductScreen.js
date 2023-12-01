@@ -1,18 +1,13 @@
-import {View} from 'react-native';
-import React, {memo} from 'react';
-import {HeaderComp, ShoesCard} from '../Components';
+import {StyleSheet, Text, View} from 'react-native';
+import React from 'react';
+import {HeaderComp} from '../Components';
 import {ChevronLeftIcon, HeartIcon} from 'react-native-heroicons/outline';
 import {theme} from '../constants/theme';
 import Ripple from 'react-native-material-ripple';
-import {FlatList} from 'react-native-gesture-handler';
 
-const Favourite = ({navigation}) => {
-  const array = new Array(20).fill(0).map((_, index) => {
-    index;
-  });
-
+const ProductScreen = ({navigation}) => {
   return (
-    <View className="flex-1 bg-background px-3">
+    <View className="flex-1 bg-background p-3">
       <HeaderComp
         title={'Favoirute'}
         inlineStyles={{
@@ -47,13 +42,8 @@ const Favourite = ({navigation}) => {
           </Ripple>
         }
       />
-      <FlatList
-        data={array}
-        numColumns={2}
-        renderItem={({item, index}) => <ShoesCard favourite={true} />}
-      />
     </View>
   );
 };
 
-export default memo(Favourite);
+export default ProductScreen;

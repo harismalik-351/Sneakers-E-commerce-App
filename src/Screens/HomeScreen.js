@@ -1,4 +1,4 @@
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import Ripple from 'react-native-material-ripple';
 import {
@@ -7,37 +7,33 @@ import {
   ShoppingBagIcon,
 } from 'react-native-heroicons/outline';
 import {theme} from '../constants/theme';
-import {
-  DiscountBanners,
-  FilterModal,
-  HeaderComp,
-  InputField,
-  ShoesCard,
-} from '../Components';
+import {DiscountBanners, HeaderComp, ModalMenu, ShoesCard} from '../Components';
 import {
   TouchableOpacity,
   FlatList,
   ScrollView,
 } from 'react-native-gesture-handler';
 import {ShoesList} from '../constants/shoelist';
+import data from '../constants/data.json';
 
-const HomeScreen = () => {
+const HomeScreen = ({navigation}) => {
   const [selected, setSelected] = React.useState('All Shoes');
-
-  const data = new Array(10).fill(0).map((_, index) => {
-    index;
-  });
-
-  const filterRef = React.useRef(null);
+  const [visible, setVisible] = React.useState(true);
 
   const handleFilterPress = () => {
-    filterRef?.current?.present();
+    setVisible(!visible);
   };
 
   return (
     <>
-      <FilterModal ref={filterRef} />
+      <ModalMenu
+        onBackdropPress={() => {
+          handleFilterPress();
+        }}
+        isVisible={!visible}
+      />
       <ScrollView
+        scrollEventThrottle={20}
         className="flex-1 p-5"
         style={{backgroundColor: theme.secondaryBackground}}>
         <HeaderComp
@@ -74,23 +70,20 @@ const HomeScreen = () => {
           }
         />
         <View className="justify-between items-center flex-row">
-          <InputField
-            innerStyles={{width: '100%'}}
-            iconStyle={{paddingRight: 20}}
-            prependChild={
-              <MagnifyingGlassIcon
-                strokeWidth={2}
-                size={'25'}
-                color={theme.secondaryDark}
-              />
-            }
-            placeholder={'Looking for shoes'}
-            containerStyles={{
-              flex: 1,
-              marginRight: 10,
-              backgroundColor: theme.backgroundColor,
+          <Pressable
+            onPress={() => {
+              navigation.navigate('Search');
             }}
-          />
+            className="items-center flex-row bg-white flex-1 p-3 rounded-xl mr-2">
+            <MagnifyingGlassIcon
+              strokeWidth={2}
+              size={'25'}
+              color={theme.secondaryDark}
+            />
+            <Text className="text-sm font-semibold text-gray-500 tracking-wide mx-3">
+              Looking For Shoes
+            </Text>
+          </Pressable>
           <Ripple
             onPress={() => {
               handleFilterPress();
@@ -147,12 +140,17 @@ const HomeScreen = () => {
             </TouchableOpacity>
           </View>
           <FlatList
+            initialNumToRender={30}
             horizontal
             backfaceVisibility={'hidden'}
             legacyImplementation={true}
             showsHorizontalScrollIndicator={false}
-            data={data}
-            renderItem={({item, index}) => <ShoesCard favourite={false} />}
+            data={data.filter(
+              item => selected === 'All Shoes' || item.category === selected,
+            )}
+            renderItem={({item, index}) => (
+              <ShoesCard item={item} favourite={false} />
+            )}
           />
           <View className="mx-2 my-1 flex-row justify-between items-center">
             <Text className="text-lg  font-medium">New Arrivals</Text>
@@ -162,6 +160,17 @@ const HomeScreen = () => {
           </View>
           <DiscountBanners />
         </View>
+        <FlatList
+          initialNumToRender={30}
+          legacyImplementation={true}
+          scrollEnabled={false}
+          contentContainerStyle={{paddingBottom: 20}}
+          data={data}
+          numColumns={2}
+          renderItem={({item, index}) => (
+            <ShoesCard item={item} bestSellers={false} favourite={false} />
+          )}
+        />
       </ScrollView>
     </>
   );
