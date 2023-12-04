@@ -1,4 +1,4 @@
-import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import {Image, Pressable, Text, View} from 'react-native';
 import React from 'react';
 import Ripple from 'react-native-material-ripple';
 import {
@@ -15,8 +15,22 @@ import {
 } from 'react-native-gesture-handler';
 import {ShoesList} from '../constants/shoelist';
 import data from '../constants/data.json';
+import {useSelector} from 'react-redux';
+import LottieView from 'lottie-react-native';
 
 const HomeScreen = ({navigation}) => {
+  React.useEffect(() => {
+    if (data?.length > 0) {
+      setLoading(false);
+    }
+  }, []);
+
+  //
+  //
+  //
+  const [isLoading, setLoading] = React.useState(true);
+  const product = useSelector(state => state?.products?.product);
+  const popular = useSelector(state => state?.popular?.product);
   const [selected, setSelected] = React.useState('All Shoes');
   const [visible, setVisible] = React.useState(true);
 
@@ -105,7 +119,6 @@ const HomeScreen = ({navigation}) => {
           </Text>
           <FlatList
             horizontal
-            fadingEdgeLength={100}
             backfaceVisibility={'hidden'}
             legacyImplementation={true}
             showsHorizontalScrollIndicator={false}
@@ -139,19 +152,43 @@ const HomeScreen = ({navigation}) => {
               <Text className="text-sm text-primary font-bold">See all</Text>
             </TouchableOpacity>
           </View>
-          <FlatList
-            initialNumToRender={30}
-            horizontal
-            backfaceVisibility={'hidden'}
-            legacyImplementation={true}
-            showsHorizontalScrollIndicator={false}
-            data={data.filter(
-              item => selected === 'All Shoes' || item.category === selected,
-            )}
-            renderItem={({item, index}) => (
-              <ShoesCard item={item} favourite={false} />
-            )}
-          />
+          {isLoading ? (
+            <View className="flex items-center m-6 justify-center">
+              <LottieView
+                source={require('../../assets/lottieAnimation/animation.json')}
+                style={{width: 25, height: 25}}
+                autoPlay
+                loop
+              />
+            </View>
+          ) : (
+            <FlatList
+              horizontal
+              renderToHardwareTextureAndroid={true}
+              legacyImplementation={true}
+              showsHorizontalScrollIndicator={false}
+              data={popular.filter(
+                item => selected === 'All Shoes' || item.category === selected,
+              )}
+              renderItem={({item}) => <ShoesCard item={item} />}
+              ListHeaderComponent={() => {
+                if (isLoading) {
+                  return (
+                    <View className="flex items-center m-6 justify-center">
+                      <LottieView
+                        source={require('../../assets/lottieAnimation/animation.json')}
+                        style={{width: 25, height: 25}}
+                        autoPlay
+                        loop
+                      />
+                    </View>
+                  );
+                }
+                return null;
+              }}
+            />
+          )}
+
           <View className="mx-2 my-1 flex-row justify-between items-center">
             <Text className="text-lg  font-medium">New Arrivals</Text>
             <TouchableOpacity activeOpacity={0.4}>
@@ -161,13 +198,12 @@ const HomeScreen = ({navigation}) => {
           <DiscountBanners />
         </View>
         <FlatList
-          initialNumToRender={30}
           legacyImplementation={true}
           scrollEnabled={false}
           contentContainerStyle={{paddingBottom: 20}}
-          data={data}
+          data={product}
           numColumns={2}
-          renderItem={({item, index}) => (
+          renderItem={({item}) => (
             <ShoesCard item={item} bestSellers={false} favourite={false} />
           )}
         />
@@ -177,5 +213,3 @@ const HomeScreen = ({navigation}) => {
 };
 
 export default HomeScreen;
-
-const styles = StyleSheet.create({});

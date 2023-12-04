@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {Text} from 'react-native';
 import React from 'react';
 import Ripple from 'react-native-material-ripple';
 const LongButton = ({onPress, title, backgroundColor, color, Childred}) => {
@@ -20,5 +20,3 @@ const LongButton = ({onPress, title, backgroundColor, color, Childred}) => {
 };
 
 export default LongButton;
-
-const styles = StyleSheet.create({});

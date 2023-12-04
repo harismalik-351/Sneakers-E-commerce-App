@@ -4,7 +4,7 @@ import {CheckIcon} from 'react-native-heroicons/outline';
 import {theme} from '../constants/theme';
 import Ripple from 'react-native-material-ripple';
 
-const CartCard = ({item, isSelectted}) => {
+const CartCard = ({item}) => {
   return (
     <View className="bg-white rounded-2xl h-24 my-1.5 mx-2 flex-row border border-primary justify-between items-center">
       <View className="mx-3 rounded-2xl bg-background">
@@ -25,10 +25,10 @@ const CartCard = ({item, isSelectted}) => {
         </Text>
         <Text className="text-base font-semibold  text-black">$584.95</Text>
       </View>
-      <Ripple
-        onPress={() => {
-          setSelected(!selected);
-        }}
+      {/* <Ripple
+        // onPress={() => {
+        //   isSelectted(true);
+        // }}
         rippleContainerBorderRadius={16}
         className={
           selected
@@ -39,7 +39,7 @@ const CartCard = ({item, isSelectted}) => {
           color={selected ? theme.backgroundColor : theme.primery}
           strokeWidth={2}
         />
-      </Ripple>
+      </Ripple> */}
     </View>
   );
 };

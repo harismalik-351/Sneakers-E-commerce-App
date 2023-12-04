@@ -1,13 +1,26 @@
-import {Dimensions, Image, StyleSheet, Text, View} from 'react-native';
+import {Dimensions, Image, Text, View} from 'react-native';
 import React from 'react';
 import {HeartIcon, PlusIcon} from 'react-native-heroicons/outline';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {theme} from '../constants/theme';
 import {useNavigation} from '@react-navigation/native';
+import {useDispatch} from 'react-redux';
+import {productSlice} from '../ReduxStore/productSlice';
+import {cartSlice} from '../ReduxStore/addToCart';
 
 const {width, height} = Dimensions.get('screen');
 
-const ShoesCard = ({item, favourite, bestSellers}) => {
+const ShoesCard = ({item, favourite}) => {
+  const addToCart = product => {
+    dispatch(cartSlice.actions.addCartItem({product}));
+  };
+
+  const pressOnProduct = () => {
+    dispatch(productSlice.actions.setSelectedProduct(item.id));
+    navigation.navigate('Product');
+  };
+  const dispatch = useDispatch();
+
   const navigation = useNavigation();
   return (
     <View
@@ -22,13 +35,18 @@ const ShoesCard = ({item, favourite, bestSellers}) => {
           <TouchableOpacity
             activeOpacity={0.9}
             onPress={() => {
-              navigation.navigate('Product', {item});
+              pressOnProduct();
             }}
-            className=" justify-center items-center p-1 py-2">
-            {item?.imageURL ? (
+            className=" justify-center items-center round p-1 py-2">
+            {item?.image || item?.imageURL ? (
               <Image
-                style={{width: 140, height: 105}}
-                source={{uri: item?.imageURL}}
+                style={{
+                  width: 140,
+                  backgroundColor: '#EBEEF0',
+                  borderRadius: 20,
+                  height: 105,
+                }}
+                source={{uri: item?.image || item?.imageURL}}
               />
             ) : null}
             {/* <View
@@ -66,7 +84,11 @@ const ShoesCard = ({item, favourite, bestSellers}) => {
             <View className="w-3 h-3 bg-gray-800 rounded-full" />
           </View>
         ) : (
-          <TouchableOpacity className="bg-primary justify-center items-center w-10 h-10 rounded-tl-2xl rounded-br-2xl ">
+          <TouchableOpacity
+            onPress={() => {
+              addToCart(item);
+            }}
+            className="bg-primary justify-center items-center w-10 h-10 rounded-tl-2xl rounded-br-2xl ">
             <PlusIcon color={theme.backgroundColor} />
           </TouchableOpacity>
         )}
@@ -76,5 +98,3 @@ const ShoesCard = ({item, favourite, bestSellers}) => {
 };
 
 export default React.memo(ShoesCard);
-
-const styles = StyleSheet.create({});

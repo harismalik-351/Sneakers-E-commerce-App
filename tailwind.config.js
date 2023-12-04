@@ -7,6 +7,7 @@ module.exports = {
         primary: '#0D6EFD',
         parcent: '#674DC5',
         background: '#F7F7F9',
+        imageBackground: '#EBEEF0',
       },
     },
   },

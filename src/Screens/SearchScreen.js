@@ -1,10 +1,9 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {View} from 'react-native';
 import React from 'react';
 import Ripple from 'react-native-material-ripple';
 import {HeaderComp, InputField} from '../Components';
 import {
   ChevronLeftIcon,
-  HeartIcon,
   MagnifyingGlassIcon,
 } from 'react-native-heroicons/outline';
 import {theme} from '../constants/theme';

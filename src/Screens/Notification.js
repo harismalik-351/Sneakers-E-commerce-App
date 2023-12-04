@@ -1,11 +1,7 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {View} from 'react-native';
 import React from 'react';
 import {HeaderComp} from '../Components';
-import {
-  ChevronLeftIcon,
-  HeartIcon,
-  TrashIcon,
-} from 'react-native-heroicons/outline';
+import {ChevronLeftIcon, TrashIcon} from 'react-native-heroicons/outline';
 import {theme} from '../constants/theme';
 import Ripple from 'react-native-material-ripple';
 
@@ -51,5 +47,3 @@ const Notification = ({navigation}) => {
 };
 
 export default Notification;
-
-const styles = StyleSheet.create({});

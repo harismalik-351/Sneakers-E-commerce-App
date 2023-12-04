@@ -4,13 +4,17 @@ import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import {Route} from './src/Navigation';
+import {Provider} from 'react-redux';
+import {store} from './src/ReduxStore';
 
 const App = gestureHandlerRootHOC(() => {
   return (
     <SafeAreaProvider>
-      <BottomSheetModalProvider>
-        <Route />
-      </BottomSheetModalProvider>
+      <Provider store={store}>
+        <BottomSheetModalProvider>
+          <Route />
+        </BottomSheetModalProvider>
+      </Provider>
     </SafeAreaProvider>
   );
 });

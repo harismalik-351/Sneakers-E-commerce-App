@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {View} from 'react-native';
 import React from 'react';
 import {HeaderComp} from '../Components';
 import {ChevronLeftIcon} from 'react-native-heroicons/outline';
@@ -36,5 +36,3 @@ const CheckOut = ({navigation}) => {
 };
 
 export default CheckOut;
-
-const styles = StyleSheet.create({});

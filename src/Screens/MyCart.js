@@ -5,12 +5,15 @@ import {ChevronLeftIcon} from 'react-native-heroicons/outline';
 import {theme} from '../constants/theme';
 import Ripple from 'react-native-material-ripple';
 import {FlatList} from 'react-native-gesture-handler';
+import {useSelector} from 'react-redux';
 
 const textStyles = 'justify-between items-center flex-row';
 
 const MyCart = ({navigation}) => {
-  const [selected, setSelected] = React.useState(false);
-  const array = new Array(10).fill(0).map((_, index) => {
+  const cartItem = useSelector(state => state.cart.items);
+
+  // const [selected, setSelected] = React.useState(false);
+  const array = new Array(6).fill(0).map((_, index) => {
     index;
   });
   return (
@@ -45,9 +48,7 @@ const MyCart = ({navigation}) => {
         <FlatList
           data={array}
           numColumns={1}
-          renderItem={({item, index}) => (
-            <CartCard item={item} isSelected={setSelected} />
-          )}
+          renderItem={({item, index}) => <CartCard item={item} />}
         />
       </View>
       <View className="bg-white w-full h-1/3.5">
@@ -86,5 +87,3 @@ const MyCart = ({navigation}) => {
 };
 
 export default MyCart;
-
-const styles = StyleSheet.create({});

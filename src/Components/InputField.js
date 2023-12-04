@@ -1,4 +1,4 @@
-import {StyleSheet, Text, TextInput, View} from 'react-native';
+import {TextInput, View} from 'react-native';
 import React from 'react';
 import {theme} from '../constants/theme';
 
@@ -51,5 +51,3 @@ const InputField = ({
 };
 
 export default InputField;
-
-const styles = StyleSheet.create({});

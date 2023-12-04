@@ -11,7 +11,6 @@ import {
 import BootSplash from 'react-native-bootsplash';
 import {
   CheckOut,
-  HomeScreen,
   MyCart,
   OnBoardScreen,
   ProductScreen,
@@ -59,6 +58,7 @@ const Route = () => {
             animation: 'slide_from_right',
             animationTypeForReplace: 'push',
             statusBarTranslucent: true,
+            swipeDirection: 'vertical',
           }}>
           <Stack.Screen name="OtpScreen" component={OtpScreen} />
           <Stack.Screen name="Login" component={LoginScreen} />
