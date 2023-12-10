@@ -1,6 +1,5 @@
-import {Image, Pressable, Text, View} from 'react-native';
+import {Image, Platform, Pressable, Text, UIManager, View} from 'react-native';
 import React from 'react';
-import Ripple from 'react-native-material-ripple';
 import {
   AdjustmentsHorizontalIcon,
   MagnifyingGlassIcon,
@@ -24,6 +23,13 @@ const HomeScreen = ({navigation}) => {
       setLoading(false);
     }
   }, []);
+
+  if (
+    Platform.OS === 'android' &&
+    UIManager.setLayoutAnimationEnabledExperimental
+  ) {
+    UIManager.setLayoutAnimationEnabledExperimental(true);
+  }
 
   //
   //
@@ -52,36 +58,8 @@ const HomeScreen = ({navigation}) => {
         style={{backgroundColor: theme.secondaryBackground}}>
         <HeaderComp
           title={'Explore'}
-          prepend={
-            <Ripple
-              rippleContainerBorderRadius={30}
-              style={{
-                padding: 10,
-                borderRadius: 30,
-              }}>
-              <Image
-                style={{width: 20, height: 20}}
-                source={require('../../assets/barIcon.png')}
-              />
-            </Ripple>
-          }
-          apppend={
-            <Ripple
-              rippleContainerBorderRadius={30}
-              style={{
-                backgroundColor: theme.backgroundColor,
-                padding: 10,
-                borderWidth: 0.5,
-                borderColor: theme.primery,
-                borderRadius: 30,
-              }}>
-              <ShoppingBagIcon
-                strokeWidth={1.5}
-                color={theme.darkColor}
-                size={'23'}
-              />
-            </Ripple>
-          }
+          apppend={<View className="w-10" />}
+          prepend={<View className="w-10" />}
         />
         <View className="justify-between items-center flex-row">
           <Pressable
@@ -98,7 +76,7 @@ const HomeScreen = ({navigation}) => {
               Looking For Shoes
             </Text>
           </Pressable>
-          <Ripple
+          <TouchableOpacity
             onPress={() => {
               handleFilterPress();
             }}
@@ -111,7 +89,7 @@ const HomeScreen = ({navigation}) => {
               color={theme.backgroundColor}
               size={'28'}
             />
-          </Ripple>
+          </TouchableOpacity>
         </View>
         <View className="my-3.5">
           <Text className="text-xl font-semibold tracking-wide">
@@ -200,11 +178,16 @@ const HomeScreen = ({navigation}) => {
         <FlatList
           legacyImplementation={true}
           scrollEnabled={false}
-          contentContainerStyle={{paddingBottom: 20}}
+          contentContainerStyle={{paddingBottom: 40}}
           data={product}
           numColumns={2}
-          renderItem={({item}) => (
-            <ShoesCard item={item} bestSellers={false} favourite={false} />
+          renderItem={({item, index}) => (
+            <ShoesCard
+              item={item}
+              index={index}
+              bestSellers={false}
+              favourite={false}
+            />
           )}
         />
       </ScrollView>

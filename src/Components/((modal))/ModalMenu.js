@@ -16,8 +16,8 @@ const ModalMenu = ({isVisible, onBackdropPress}) => {
       onBackdropPress={onBackdropPress}
       useNativeDriver={true}
       backdropColor="tansparent"
-      animationIn={'slideInRight'}
-      animationOut={'slideOutRight'}
+      animationIn={'flash'}
+      animationOut={'flash'}
       animationOutTiming={140}
       animationInTiming={120}
       coverScreen={false}
@@ -38,21 +38,15 @@ const ModalMenu = ({isVisible, onBackdropPress}) => {
         <Text className="text-center py-2 text-base text-black tracking-wide font-semibold">
           Filter
         </Text>
-        <Pressable
-          onPress={() => {
-            console.log('====================================');
-            console.log();
-            console.log('====================================');
-          }}
-          className={touchable}>
+        <Pressable onPress={() => {}} className={touchable}>
           <LanguageIcon color={theme.primery} size={20} />
           <Text>Name</Text>
         </Pressable>
-        <Pressable className={touchable}>
+        <Pressable onPress={() => {}} className={touchable}>
           <CurrencyDollarIcon color={'green'} size={20} />
           <Text>Price</Text>
         </Pressable>
-        <Pressable className={touchable}>
+        <Pressable onPress={() => {}} className={touchable}>
           <FireIcon color={'red'} size={20} />
           <Text>Popular</Text>
         </Pressable>

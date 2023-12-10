@@ -3,13 +3,11 @@ import React, {memo} from 'react';
 import {HeaderComp, ShoesCard} from '../Components';
 import {ChevronLeftIcon, HeartIcon} from 'react-native-heroicons/outline';
 import {theme} from '../constants/theme';
-import Ripple from 'react-native-material-ripple';
-import {FlatList} from 'react-native-gesture-handler';
+import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
+import {useFavorites} from '../AsyncStorage/FavStorage';
 
 const Favourite = ({navigation}) => {
-  const array = new Array(20).fill(0).map((_, index) => {
-    index;
-  });
+  const {favorites} = useFavorites();
 
   return (
     <View className="flex-1 bg-background px-3">
@@ -20,8 +18,7 @@ const Favourite = ({navigation}) => {
           fontWeight: '600',
         }}
         prepend={
-          <Ripple
-            rippleContainerBorderRadius={30}
+          <TouchableOpacity
             onPress={() => {
               navigation.goBack();
             }}
@@ -32,11 +29,10 @@ const Favourite = ({navigation}) => {
               borderRadius: 30,
             }}>
             <ChevronLeftIcon color={theme.darkColor} size={'18'} />
-          </Ripple>
+          </TouchableOpacity>
         }
         apppend={
-          <Ripple
-            rippleContainerBorderRadius={30}
+          <TouchableOpacity
             style={{
               backgroundColor: theme.backgroundColor,
               padding: 10,
@@ -44,13 +40,13 @@ const Favourite = ({navigation}) => {
               elevation: 3,
             }}>
             <HeartIcon strokeWidth={1.5} color={theme.darkColor} size={'20'} />
-          </Ripple>
+          </TouchableOpacity>
         }
       />
       <FlatList
-        data={array}
+        data={favorites}
         numColumns={2}
-        renderItem={({item, index}) => <ShoesCard favourite={true} />}
+        renderItem={({item, index}) => <ShoesCard index={index} item={item} />}
       />
     </View>
   );

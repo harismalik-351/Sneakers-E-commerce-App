@@ -1,7 +1,8 @@
 import {createSlice} from '@reduxjs/toolkit';
-import data from '../constants/data.json';
+import products from '../constants/products';
+
 const initialState = {
-  product: data,
+  product: products,
   selectedPopular: null,
 };
 

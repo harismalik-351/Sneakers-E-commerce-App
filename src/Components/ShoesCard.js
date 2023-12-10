@@ -1,25 +1,51 @@
-import {Dimensions, Image, Text, View} from 'react-native';
+import {Dimensions, Image, LayoutAnimation, Text, View} from 'react-native';
 import React from 'react';
 import {HeartIcon, PlusIcon} from 'react-native-heroicons/outline';
+import {HeartIcon as Heart} from 'react-native-heroicons/solid';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {theme} from '../constants/theme';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {productSlice} from '../ReduxStore/productSlice';
-import {cartSlice} from '../ReduxStore/addToCart';
+import {useCart} from '../AsyncStorage/cartStorage';
+import {useFavorites} from '../AsyncStorage/FavStorage';
+import Animated, {SharedTransitionType} from 'react-native-reanimated';
 
-const {width, height} = Dimensions.get('screen');
+const {width} = Dimensions.get('screen');
 
 const ShoesCard = ({item, favourite}) => {
-  const addToCart = product => {
-    dispatch(cartSlice.actions.addCartItem({product}));
+  const {addToCart} = useCart();
+  const {favorites, addToFavorites, removeFromFavorites} = useFavorites();
+
+  const [isFavorite, setIsFavorite] = React.useState(false);
+
+  React.useEffect(() => {
+    // Check if the current item is in the favorites list
+    const isItemFavorite = favorites.some(
+      favoriteItem => favoriteItem.id === item.id,
+    );
+    setIsFavorite(isItemFavorite);
+  }, [favorites, item]);
+
+  const handleToggleFavorite = () => {
+    if (isFavorite) {
+      removeFromFavorites(item.id);
+    } else {
+      addToFavorites(item);
+    }
   };
+
+  // };
+  const dispatch = useDispatch();
 
   const pressOnProduct = () => {
     dispatch(productSlice.actions.setSelectedProduct(item.id));
     navigation.navigate('Product');
   };
-  const dispatch = useDispatch();
+
+  const handleAddToCart = product => {
+    addToCart(product);
+  };
 
   const navigation = useNavigation();
   return (
@@ -28,8 +54,16 @@ const ShoesCard = ({item, favourite}) => {
       style={{width: width * 0.43}}
       className="flex-1 bg-white my-3 mx-1 rounded-2xl">
       <View className="px-3 py-2">
-        <TouchableOpacity className=" justify-center items-center w-8 h-6 rounded-full">
-          <HeartIcon strokeWidth={2} color={'#000'} size={'20'} />
+        <TouchableOpacity
+          onPress={() => {
+            handleToggleFavorite();
+          }}
+          className=" justify-center items-center w-8 h-6 rounded-full">
+          {isFavorite ? (
+            <Heart color={'red'} size={'20'} />
+          ) : (
+            <HeartIcon strokeWidth={2} color={'#000'} size={'20'} />
+          )}
         </TouchableOpacity>
         <View>
           <TouchableOpacity
@@ -39,12 +73,14 @@ const ShoesCard = ({item, favourite}) => {
             }}
             className=" justify-center items-center round p-1 py-2">
             {item?.image || item?.imageURL ? (
-              <Image
+              <Animated.Image
+                sharedTransitionTag="image"
                 style={{
-                  width: 140,
+                  aspectRatio: 1,
+                  width: 150,
                   backgroundColor: '#EBEEF0',
                   borderRadius: 20,
-                  height: 105,
+                  height: 115,
                 }}
                 source={{uri: item?.image || item?.imageURL}}
               />
@@ -86,7 +122,7 @@ const ShoesCard = ({item, favourite}) => {
         ) : (
           <TouchableOpacity
             onPress={() => {
-              addToCart(item);
+              handleAddToCart(item);
             }}
             className="bg-primary justify-center items-center w-10 h-10 rounded-tl-2xl rounded-br-2xl ">
             <PlusIcon color={theme.backgroundColor} />

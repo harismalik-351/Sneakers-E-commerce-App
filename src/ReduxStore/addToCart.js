@@ -18,7 +18,7 @@ export const cartSlice = createSlice({
       if (cartItem) {
         cartItem.quantity += 1;
       } else {
-        state.items.push({product: newProduct, quantity: 1});
+        state?.items?.push({product: newProduct, quantity: 1});
       }
     },
     changeQuantity: (state, action) => {
@@ -28,6 +28,11 @@ export const cartSlice = createSlice({
       });
       if (cartItem) {
         cartItem.quantity += amount;
+      }
+      if (cartItem.quantity <= 0) {
+        state.items = state.items.filter(item => {
+          item !== cartItem;
+        });
       }
     },
   },
