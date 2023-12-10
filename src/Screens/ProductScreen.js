@@ -20,10 +20,39 @@ import {MoreOrLess} from '@rntext/more-or-less';
 import {useCart} from '../AsyncStorage/cartStorage';
 import {useFavorites} from '../AsyncStorage/FavStorage';
 
-const ProductScreen = ({navigation}) => {
+const ProductScreen = ({navigation, route}) => {
+  // const id = route.params.id;
+
   const {addToCart} = useCart();
+
   const product = useSelector(state => state.products.selectedProduct);
-  console.log(product);
+
+  const {data, isLoading, error} = useGetProductQuery(id);
+
+  // const product = data?.data;
+
+  if (isLoading) {
+    return (
+      <View className="flex items-center m-6 justify-center">
+        <LottieView
+          source={require('../../assets/lottieAnimation/animation.json')}
+          style={{width: 50, height: 50}}
+          autoPlay
+          loop
+        />
+      </View>
+    );
+  }
+
+  if (error) {
+    ToastAndroid.showWithGravityAndOffset(
+      'Network Connection Error',
+      ToastAndroid.LONG,
+      ToastAndroid.BOTTOM,
+      25,
+      50,
+    );
+  }
 
   const [Images, setImages] = React.useState(product?.image);
 

@@ -41,6 +41,7 @@ const ShoesCard = ({item, favourite}) => {
   const pressOnProduct = () => {
     dispatch(productSlice.actions.setSelectedProduct(item.id));
     navigation.navigate('Product');
+    // navigation.navigate('Product', {id: item._id});
   };
 
   const handleAddToCart = product => {

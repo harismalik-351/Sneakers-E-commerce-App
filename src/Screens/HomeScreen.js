@@ -1,4 +1,12 @@
-import {Image, Platform, Pressable, Text, UIManager, View} from 'react-native';
+import {
+  Image,
+  Platform,
+  Pressable,
+  Text,
+  ToastAndroid,
+  UIManager,
+  View,
+} from 'react-native';
 import React from 'react';
 import {
   AdjustmentsHorizontalIcon,
@@ -16,6 +24,7 @@ import {ShoesList} from '../constants/shoelist';
 import data from '../constants/data.json';
 import {useSelector} from 'react-redux';
 import LottieView from 'lottie-react-native';
+import {useGetProductsQuery} from '../ReduxStore/apiSlice';
 
 const HomeScreen = ({navigation}) => {
   React.useEffect(() => {
@@ -34,15 +43,41 @@ const HomeScreen = ({navigation}) => {
   //
   //
   //
-  const [isLoading, setLoading] = React.useState(true);
+  const [selected, setSelected] = React.useState('All Shoes');
+  const [Loading, setLoading] = React.useState(true);
+  const [visible, setVisible] = React.useState(true);
   const product = useSelector(state => state?.products?.product);
   const popular = useSelector(state => state?.popular?.product);
-  const [selected, setSelected] = React.useState('All Shoes');
-  const [visible, setVisible] = React.useState(true);
 
+  const {data, isLoading, error} = useGetProductsQuery();
+
+  // const product = data?.data;
   const handleFilterPress = () => {
     setVisible(!visible);
   };
+
+  if (isLoading) {
+    return (
+      <View className="flex items-center m-6 justify-center">
+        <LottieView
+          source={require('../../assets/lottieAnimation/animation.json')}
+          style={{width: 50, height: 50}}
+          autoPlay
+          loop
+        />
+      </View>
+    );
+  }
+
+  if (error) {
+    ToastAndroid.showWithGravityAndOffset(
+      'Network Connection Error',
+      ToastAndroid.LONG,
+      ToastAndroid.BOTTOM,
+      25,
+      50,
+    );
+  }
 
   return (
     <>
@@ -130,7 +165,7 @@ const HomeScreen = ({navigation}) => {
               <Text className="text-sm text-primary font-bold">See all</Text>
             </TouchableOpacity>
           </View>
-          {isLoading ? (
+          {Loading ? (
             <View className="flex items-center m-6 justify-center">
               <LottieView
                 source={require('../../assets/lottieAnimation/animation.json')}
@@ -150,7 +185,7 @@ const HomeScreen = ({navigation}) => {
               )}
               renderItem={({item}) => <ShoesCard item={item} />}
               ListHeaderComponent={() => {
-                if (isLoading) {
+                if (Loading) {
                   return (
                     <View className="flex items-center m-6 justify-center">
                       <LottieView
