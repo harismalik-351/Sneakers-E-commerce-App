@@ -63,3 +63,8 @@ The app needs to be developed and launched within a specified timeframe.
 **Technology Constraints:**
 
 The app is built on React Native, defining technology constraints.
+
+
+**video link **
+- [YouTube Video link](https://youtu.be/rNdeG_ASC7M?si=p2wjaS09b4jXBksA)
+  
